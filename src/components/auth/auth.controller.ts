@@ -9,6 +9,8 @@ import {
   UnauthorizedException,
   UseGuards,
   NotFoundException,
+  Req,
+  Get,
 } from '@nestjs/common';
 import {
   ApiTags,
@@ -33,6 +35,7 @@ import RefreshTokenDto from './dto/refreshToken.dto';
 import SignInDto from './dto/signIn.dto';
 import SignUpDto from './dto/signUp.dto';
 import VerifyUserDto from './dto/verifyUser.dto';
+import GoogleAuthGuard from './guards/googleAuth.guard';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -64,6 +67,21 @@ export default class AuthController {
     return {
       message: 'The item was created successfully',
     };
+  }
+
+  @ApiBody({})
+  @ApiOkResponse({ description: 'Success, redirect' })
+  @ApiInternalServerErrorResponse({ description: '500. InternalServerError' })
+  @Get('google')
+  @UseGuards(GoogleAuthGuard)
+  async googleAuth(@Req() req) { }
+
+  @ApiOkResponse({ description: 'Success, redirect' })
+  @ApiInternalServerErrorResponse({ description: '500. InternalServerError' })
+  @Get('google/redirect')
+  @UseGuards(GoogleAuthGuard)
+  async googleAuthRedirect(@Req() req) {
+    return this.authService.login(req.user);
   }
 
   @ApiOkResponse({ description: '200, returns new jwt tokens' })

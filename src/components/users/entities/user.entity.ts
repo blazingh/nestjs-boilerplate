@@ -1,24 +1,26 @@
-import {
-  Entity, Column, ObjectIdColumn, ObjectID, Index,
-} from 'typeorm';
+import { Entity, Column, ObjectIdColumn, ObjectID, Index } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 
 @Entity('users')
 export default class UserEntity {
   @ApiProperty({ type: String })
   @ObjectIdColumn()
-  _id: ObjectID
+  _id: ObjectID;
 
   @ApiProperty({ type: String })
   @Column()
-  password: string
+  password: string;
 
   @ApiProperty({ type: String })
   @Column()
   @Index({ unique: true })
-  email: string
+  email: string;
 
   @ApiProperty({ type: Boolean })
   @Column()
-  verified: boolean
+  verified: boolean;
+
+  @ApiProperty({ type: String, enum: ['local', 'google'] })
+  @Column()
+  provider: 'local' | 'google';
 }

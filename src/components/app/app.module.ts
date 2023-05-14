@@ -15,11 +15,11 @@ import { ConfigModule } from '@nestjs/config';
       type: 'mongodb',
       url: 'mongodb://mongodb:27017/app',
       // automatically try to reconnect when it loses connection
-      autoReconnect: true,
+      // autoReconnect: true,
       // reconnect every reconnectInterval milliseconds
       // for reconnectTries times
-      reconnectTries: Number.MAX_VALUE,
-      reconnectInterval: 1000,
+      // reconnectTries: Number.MAX_VALUE,
+      // reconnectInterval: 1000,
       // flag to allow users to fall back to the old
       // parser if they find a bug in the new parse
       useNewUrlParser: true,
@@ -42,4 +42,4 @@ import { ConfigModule } from '@nestjs/config';
   controllers: [],
   providers: [],
 })
-export default class AppModule {}
+export default class AppModule { }

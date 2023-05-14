@@ -12,13 +12,30 @@
     "baseUrl": "./",
     "incremental": true,
     "paths": {
-      "@filters/*": ["./src/filters/*"],
-      "@guards/*": ["./src/guards/*"],
-      "@interfaces/*": ["./src/interfaces/*"],
-      "@shared/*": ["./src/components/shared/*"],
-      "@components/*": ["./src/components/*"],
-      "@pipes/*": ["./src/pipes/*"],
-      "@dto/*": ["./src/dto/*"]
+      "@filters/*": [
+        "./src/filters/*"
+      ],
+      "@guards/*": [
+        "./src/guards/*"
+      ],
+      "@interfaces/*": [
+        "./src/interfaces/*"
+      ],
+      "@shared/*": [
+        "./src/components/shared/*"
+      ],
+      "@components/*": [
+        "./src/components/*"
+      ],
+      "@pipes/*": [
+        "./src/pipes/*"
+      ],
+      "@dto/*": [
+        "./src/dto/*"
+      ],
+      "@__types__/*": [
+        "./src/__types__/*"
+      ]
     }
   }
 }

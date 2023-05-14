@@ -42,6 +42,8 @@ export default class AllExceptionsFilter implements ExceptionFilter {
     return res.status(500).json({
       statusCode: 500,
       message: 'InternalServerError',
+      error: exception.message,
+      execption: exception,
     });
   }
 }

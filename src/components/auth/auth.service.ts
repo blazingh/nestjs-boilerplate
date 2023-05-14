@@ -11,11 +11,10 @@ import { IAuthValidateUserOutput } from '@components/auth/interfaces/IAuthValida
 import { IAuthLoginOutput } from '@components/auth/interfaces/IAuthLoginOutput.interface';
 
 import UsersService from '@components/users/users.service';
-import UserEntity from '@components/users/entities/user.entity';
 
 @Injectable()
 export default class AuthService {
-  private readonly redisClient: Redis.Redis
+  private readonly redisClient: Redis.Redis;
 
   constructor(
     private readonly usersService: UsersService,
@@ -45,6 +44,22 @@ export default class AuthService {
     }
 
     return null;
+  }
+
+  async validateUserByProvider(
+    email: string,
+    provider: 'local' | 'google',
+  ): Promise<null | IAuthValidateUserOutput> {
+    const user = await this.usersService.getByEmailAndProvider(email, provider);
+
+    if (!user) {
+      throw new NotFoundException('The item does not exist');
+    }
+
+    return {
+      id: user._id,
+      email: user.email,
+    };
   }
 
   async login(data: IAuthLoginInput): Promise<IAuthLoginOutput> {

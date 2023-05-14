@@ -14,7 +14,7 @@ export default class UsersService {
   constructor(
     @InjectRepository(UserEntity)
     private readonly usersRepository: Repository<UserEntity>,
-  ) {}
+  ) { }
 
   async create(user: CreateUserDto): Promise<UserEntity> {
     const hashedPassword = await bcrypt.hash(user.password, 10);
@@ -33,6 +33,16 @@ export default class UsersService {
     });
   }
 
+  getByEmailAndProvider(
+    email: string,
+    provider: 'local' | 'google',
+  ): Promise<UserEntity> {
+    return this.usersRepository.findOne({
+      email,
+      provider,
+    });
+  }
+
   getById(id: ObjectID, verified = true): Promise<UserEntity> {
     return this.usersRepository.findOne({
       verified,
@@ -44,7 +54,7 @@ export default class UsersService {
     return this.usersRepository.update(id, data);
   }
 
-  getAll(verified : boolean = true): Promise<UserEntity[] | []> {
+  getAll(verified: boolean = true): Promise<UserEntity[] | []> {
     return this.usersRepository.find({
       where: {
         verified,

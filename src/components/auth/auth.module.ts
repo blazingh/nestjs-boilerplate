@@ -9,6 +9,7 @@ import jwtConstants from './constants';
 
 import AuthController from './auth.controller';
 import AuthService from './auth.service';
+import GoogleStrategy from './strategies/google.strategy';
 
 @Module({
   imports: [
@@ -18,8 +19,8 @@ import AuthService from './auth.service';
       secret: jwtConstants.secret,
     }),
   ],
-  providers: [AuthService, LocalStrategy, JwtStrategy],
+  providers: [AuthService, LocalStrategy, JwtStrategy, GoogleStrategy],
   controllers: [AuthController],
   exports: [AuthService],
 })
-export default class AuthModule {}
+export default class AuthModule { }
