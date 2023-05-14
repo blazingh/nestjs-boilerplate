@@ -1,4 +1,4 @@
-version: "3"
+version: '3'
 services:
   app:
     image: node:14
@@ -25,3 +25,17 @@ services:
     restart: always
     ports:
       - 6379:6379
+
+  mongo-express:
+    image: mongo-express:latest
+    environment:
+      - ME_CONFIG_MONGODB_URL="mongodb://mongodb:27017/app"
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+      - ME_CONFIG_MONGODB_PORT=27017
+      - ME_CONFIG_BASICAUTH_USERNAME=root
+      - ME_CONFIG_BASICAUTH_PASSWORD=root
+      - ME_CONFIG_OPTIONS_EDITORTHEME="ambiance"
+    depends_on:
+      - mongodb
+    ports:
+      - '8888:8081'
