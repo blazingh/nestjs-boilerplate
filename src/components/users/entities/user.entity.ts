@@ -1,5 +1,7 @@
-import { Entity, Column, ObjectIdColumn, ObjectID, Index } from 'typeorm'
-import { ApiProperty } from '@nestjs/swagger'
+import {
+  Entity, Column, ObjectIdColumn, ObjectID, Index,
+} from 'typeorm';
+import { ApiProperty } from '@nestjs/swagger';
 
 @Entity('users')
 export default class UserEntity {

@@ -76,8 +76,7 @@ export default class AuthController {
   ): Promise<IAuthLoginOutput | never> {
     const verifiedUser = this.jwtService.verify(refreshTokenDto.refreshToken);
 
-    const oldRefreshToken: string =
-      await this.authService.getRefreshTokenByEmail(verifiedUser.email);
+    const oldRefreshToken: string = await this.authService.getRefreshTokenByEmail(verifiedUser.email);
 
     // if the old refresh token is not equal to request refresh token then this user is unauthorized
     if (!oldRefreshToken || oldRefreshToken !== refreshTokenDto.refreshToken) {

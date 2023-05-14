@@ -1,12 +1,12 @@
-import { Test, TestingModule } from '@nestjs/testing'
+import { Test, TestingModule } from '@nestjs/testing';
 
-import AuthController from '@components/auth/auth.controller'
-import AuthService from '@components/auth/auth.service'
-import UsersService from '@components/users/users.service'
-import { JwtService } from '@nestjs/jwt'
+import AuthController from '@components/auth/auth.controller';
+import AuthService from '@components/auth/auth.service';
+import UsersService from '@components/users/users.service';
+import { JwtService } from '@nestjs/jwt';
 
 describe('Auth Controller', () => {
-  let controller: AuthController
+  let controller: AuthController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -25,12 +25,12 @@ describe('Auth Controller', () => {
           useValue: {},
         },
       ],
-    }).compile()
+    }).compile();
 
-    controller = module.get<AuthController>(AuthController)
-  })
+    controller = module.get<AuthController>(AuthController);
+  });
 
   it('should be defined', () => {
-    expect(controller).toBeDefined()
-  })
-})
+    expect(controller).toBeDefined();
+  });
+});
