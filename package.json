@@ -78,7 +78,12 @@
   "jest": {
     "moduleNameMapper": {
       "^@shared(.*)$": "<rootDir>/components/shared$1",
-      "^@components(.*)$": "<rootDir>/components$1"
+      "^@components(.*)$": "<rootDir>/components$1",
+      "^@filters(.*)$": "<rootDir>/filters$1",
+      "^@guards(.*)$": "<rootDir>/guards$1",
+      "^@interfaces(.*)$": "<rootDir>/interfaces$1",
+      "^@pipes(.*)$": "<rootDir>/pipes$1",
+      "^@dto(.*)$": "<rootDir>/dto$1"
     },
     "moduleFileExtensions": [
       "js",
