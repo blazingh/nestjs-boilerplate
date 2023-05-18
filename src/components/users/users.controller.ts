@@ -15,16 +15,17 @@ import {
 import JwtAuthGuard from '@guards/jwtAuth.guard';
 import ParseObjectIdPipe from '@pipes/parseObjectId.pipe';
 import UsersService from './users.service';
-import UserEntity from './entities/user.entity';
+import { User } from './schema/user.schema';
+import * as mongoose from 'mongoose';
 
 @ApiTags('Users')
 @ApiBearerAuth()
 @Controller('users')
 export default class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService) { }
 
   @ApiOkResponse({
-    type: UserEntity,
+    type: User,
     description: '200. Success. Returns a user',
   })
   @ApiNotFoundResponse({
@@ -37,9 +38,10 @@ export default class UsersController {
   @UseGuards(JwtAuthGuard)
   async getById(
     @Param('id', ParseObjectIdPipe) id: string,
-  ): Promise<UserEntity | never> {
-    const foundUser = await this.usersService.getById(id);
-
+  ): Promise<User | never> {
+    const foundUser = await this.usersService.getById(
+      new mongoose.Schema.Types.ObjectId(id),
+    );
     if (!foundUser) {
       throw new NotFoundException('The user does not exist');
     }
@@ -48,7 +50,7 @@ export default class UsersController {
   }
 
   @ApiOkResponse({
-    type: [UserEntity],
+    type: [User],
     description: '200. Success. Returns all users',
   })
   @ApiUnauthorizedResponse({
@@ -56,7 +58,7 @@ export default class UsersController {
   })
   @Get()
   @UseGuards(JwtAuthGuard)
-  async getAllVerifiedUsers(): Promise<UserEntity[] | []> {
+  async getAllVerifiedUsers(): Promise<User[] | []> {
     const foundUsers = await this.usersService.getAll(true);
 
     return foundUsers;

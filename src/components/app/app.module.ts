@@ -1,40 +1,22 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { RedisModule } from 'nestjs-redis';
+import { RedisModule } from '@liaoliaots/nestjs-redis';
 
 import AuthModule from '@components/auth/auth.module';
 import UsersModule from '@components/users/users.module';
 import { ConfigModule } from '@nestjs/config';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    TypeOrmModule.forRoot({
-      type: 'mongodb',
-      url: 'mongodb://mongodb:27017/app',
-      // automatically try to reconnect when it loses connection
-      // autoReconnect: true,
-      // reconnect every reconnectInterval milliseconds
-      // for reconnectTries times
-      // reconnectTries: Number.MAX_VALUE,
-      // reconnectInterval: 1000,
-      // flag to allow users to fall back to the old
-      // parser if they find a bug in the new parse
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      entities: ['dist/**/*.entity{.ts,.js}'],
-      synchronize: true,
-    }),
-    RedisModule.register({
-      url: 'redis://redis:6379',
-      onClientReady: async (client): Promise<void> => {
-        client.on('error', console.error);
-        client.on('ready', () => console.log('redis is running on 6379 port'));
-        client.on('restart', () => console.log('attempt to restart the redis server'));
+    MongooseModule.forRoot('mongodb://mongodb:27017/app'),
+    RedisModule.forRoot({
+      config: {
+        host: 'redis',
+        port: 6379,
       },
-      reconnectOnError: (): boolean => true,
     }),
     AuthModule,
     UsersModule,

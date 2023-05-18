@@ -3,7 +3,7 @@ import * as bcrypt from 'bcrypt';
 
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { RedisService } from 'nestjs-redis';
+import { RedisService } from '@liaoliaots/nestjs-redis';
 import jwtConstants from '@components/auth/constants';
 
 import { IAuthLoginInput } from '@components/auth/interfaces/IAuthLoginInput.interface';
@@ -11,6 +11,7 @@ import { IAuthValidateUserOutput } from '@components/auth/interfaces/IAuthValida
 import { IAuthLoginOutput } from '@components/auth/interfaces/IAuthLoginOutput.interface';
 
 import UsersService from '@components/users/users.service';
+import { EProviders } from '@components/users/schema/user.schema';
 
 @Injectable()
 export default class AuthService {
@@ -48,7 +49,7 @@ export default class AuthService {
 
   async validateUserByProvider(
     email: string,
-    provider: 'local' | 'google',
+    provider: EProviders,
   ): Promise<null | IAuthValidateUserOutput> {
     const user = await this.usersService.getByEmailAndProvider(email, provider);
 

@@ -24,7 +24,7 @@ import {
 import { JwtService } from '@nestjs/jwt';
 
 import UsersService from '@components/users/users.service';
-import UserEntity from '@components/users/entities/user.entity';
+import { User } from '@components/users/schema/user.schema';
 import JwtAuthGuard from '@guards/jwtAuth.guard';
 
 import OkResponseDto from '@dto/okResponse.dto';
@@ -94,7 +94,9 @@ export default class AuthController {
   ): Promise<IAuthLoginOutput | never> {
     const verifiedUser = this.jwtService.verify(refreshTokenDto.refreshToken);
 
-    const oldRefreshToken: string = await this.authService.getRefreshTokenByEmail(verifiedUser.email);
+    const oldRefreshToken: string = await this.authService.getRefreshTokenByEmail(
+      verifiedUser.email,
+    );
 
     // if the old refresh token is not equal to request refresh token then this user is unauthorized
     if (!oldRefreshToken || oldRefreshToken !== refreshTokenDto.refreshToken) {
@@ -124,7 +126,7 @@ export default class AuthController {
   async verifyUser(
     @Body() verifyUserDto: VerifyUserDto,
   ): Promise<boolean | never> {
-    const foundUser: UserEntity = await this.usersService.getByEmail(
+    const foundUser: User = await this.usersService.getByEmail(
       verifyUserDto.email,
       false,
     );

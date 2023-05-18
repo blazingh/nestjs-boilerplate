@@ -1,6 +1,6 @@
-import { ObjectID } from 'typeorm';
+import { ObjectId } from 'mongoose';
 
 export interface IJwtStrategyValidate {
-  id: ObjectID
-  email: string
+  id: ObjectId;
+  email: string;
 }

@@ -1,61 +1,55 @@
 import * as bcrypt from 'bcrypt';
-
-import { ObjectID } from 'mongodb';
-import { Repository, UpdateResult } from 'typeorm';
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-
-import UserEntity from './entities/user.entity';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model, ObjectId } from 'mongoose';
+import { EProviders, User } from './schema/user.schema';
 import UpdateUserDto from './dto/updateUser.dto';
 import CreateUserDto from './dto/createUser.dto';
 
 @Injectable()
 export default class UsersService {
   constructor(
-    @InjectRepository(UserEntity)
-    private readonly usersRepository: Repository<UserEntity>,
+    @InjectModel(User.name)
+    private userModel: Model<User>,
   ) { }
 
-  async create(user: CreateUserDto): Promise<UserEntity> {
+  async create(user: CreateUserDto): Promise<User> {
     const hashedPassword = await bcrypt.hash(user.password, 10);
 
-    return this.usersRepository.save({
+    return this.userModel.create({
       password: hashedPassword,
       email: user.email,
       verified: false,
     });
   }
 
-  getByEmail(email: string, verified = true): Promise<UserEntity> {
-    return this.usersRepository.findOne({
+  getByEmail(email: string, verified = true): Promise<User> {
+    return this.userModel.findOne({
       email,
       verified,
     });
   }
 
-  getByEmailAndProvider(
-    email: string,
-    provider: 'local' | 'google',
-  ): Promise<UserEntity> {
-    return this.usersRepository.findOne({
+  getByEmailAndProvider(email: string, provider: EProviders): Promise<User> {
+    return this.userModel.findOne({
       email,
       provider,
     });
   }
 
-  getById(id: ObjectID, verified = true): Promise<UserEntity> {
-    return this.usersRepository.findOne({
+  getById(id: ObjectId, verified = true): Promise<User> {
+    return this.userModel.findOne({
+      _id: id,
       verified,
-      _id: new ObjectID(id),
     });
   }
 
-  update(id: ObjectID, data: UpdateUserDto): Promise<UpdateResult> {
-    return this.usersRepository.update(id, data);
+  update(id: ObjectId, data: UpdateUserDto): Promise<User> {
+    return this.userModel.findOneAndUpdate({ _id: id }, data);
   }
 
-  getAll(verified: boolean = true): Promise<UserEntity[] | []> {
-    return this.usersRepository.find({
+  getAll(verified: boolean = true): Promise<User[] | []> {
+    return this.userModel.find({
       where: {
         verified,
       },

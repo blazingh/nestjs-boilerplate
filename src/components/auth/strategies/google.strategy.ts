@@ -2,6 +2,7 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, VerifyCallback } from 'passport-google-oauth20';
 
 import { Injectable } from '@nestjs/common';
+import { EProviders } from '@components/users/schema/user.schema';
 import AuthService from '../auth.service';
 
 @Injectable()
@@ -25,10 +26,9 @@ export default class GoogleStrategy extends PassportStrategy(
     done: VerifyCallback,
   ): Promise<any> {
     const { name, emails, photos } = profile;
-    console.log(profile);
     const user = await this.authService.validateUserByProvider(
       emails[0].value,
-      'google',
+      EProviders.GOOGLE,
     );
     // const user = {
     //   email: emails[0].value,

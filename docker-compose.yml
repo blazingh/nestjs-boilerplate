@@ -1,7 +1,7 @@
 version: '3'
 services:
   app:
-    image: node:14
+    image: node:18.16.0
     container_name: app
     command: bash -c "npm run start:dev"
     working_dir: /var/www/app
