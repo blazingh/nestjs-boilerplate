@@ -12,7 +12,6 @@ export enum EProviders {
 @Schema()
 export class User {
   @ApiProperty({ type: String })
-  @Prop({ type: mongoose.Schema.Types.ObjectId })
   _id: ObjectId;
 
   @ApiProperty({ type: String })

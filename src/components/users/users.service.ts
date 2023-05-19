@@ -2,7 +2,7 @@ import * as bcrypt from 'bcrypt';
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, ObjectId } from 'mongoose';
-import { EProviders, User } from './schema/user.schema';
+import { EProviders, User, UserSchema } from './schema/user.schema';
 import UpdateUserDto from './dto/updateUser.dto';
 import CreateUserDto from './dto/createUser.dto';
 
@@ -16,11 +16,13 @@ export default class UsersService {
   async create(user: CreateUserDto): Promise<User> {
     const hashedPassword = await bcrypt.hash(user.password, 10);
 
-    return this.userModel.create({
+    const newUser = new this.userModel({
       password: hashedPassword,
       email: user.email,
       verified: false,
     });
+
+    return newUser.save();
   }
 
   getByEmail(email: string, verified = true): Promise<User> {
