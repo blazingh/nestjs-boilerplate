@@ -3,10 +3,12 @@
 
 ![onix](https://img.shields.io/badge/onix-systems-blue.svg)
 
-> Node.js Nest.js API with TypeScript 3. Supports MongoDB
+> Node.js Nest.js API with TypeScript 5. Supports MongoDB, Redis, Passport, Swagger and more.
 
 ## Description
-This generator will help you to build your own Nest.js Mongodb API using TypeScript 3.
+This Template will help you to build your own Nest.js Mongodb API using TypeScript 5.
+skip the boiler plate and start creating you rproject
+
 
 ### Project Introduction
 - Support ES6/ES7 features
@@ -18,6 +20,7 @@ This generator will help you to build your own Nest.js Mongodb API using TypeScr
 - Prettier
 - Jest because testing matters
 - Typescript for coding with static type checking
+- Mongodb And Redis admin panel
 
 ## Features
 ##### Authentication:
@@ -27,7 +30,6 @@ This generator will help you to build your own Nest.js Mongodb API using TypeScr
 ##### Session Storage:
 - MongoDB
 - Redis
-- MySQL
 ##### Integration testing
 - mocha
 - chai
@@ -35,10 +37,10 @@ This generator will help you to build your own Nest.js Mongodb API using TypeScr
 
 ## Requirements
 
-- node >= 12
-- npm >= 6
+- node >= 18
+- yarn >= 1.22
 - mongodb >= 4.0
-- typescript >= 3.0
+- typescript >= 5.0
 
 ## Installation
 
@@ -91,15 +93,15 @@ App Skeleton
 To start the application in development mode, run:
 
 ```bash
-npm start:dev
+yarn start:dev
 ```
 
 Start the application in production env:
 
 Install ts pm2 and typescript compiler:
 ```
-npm install -g pm2
-pm2 install typescript
+yarn add pm2 --global
+yarn add typescript
 ```
 
 example start with scale on 2 core:
@@ -113,7 +115,7 @@ The developer mode will watch your changes then will transpile the TypeScript co
 ### Testing
 To run integration tests:
 ```bash
-npm test
+yarn test
 ```
 
 ### Docker
@@ -125,7 +127,7 @@ npm test
  
  #### Now, lift up your app in docker 
 ``` 
-  docker-compose up 
+  docker-compose up -d
 ```
   
 ## Set up environment
@@ -143,13 +145,5 @@ http://localhost:3000/api
 
 ### Oauth2 auth
 ![Alt Text3](https://media.giphy.com/media/RiWDyLQwXaJXu972SM/giphy.gif)
-- When you go by http://localhost:3000/google route, google'll ask you to authorize into your account. After successfully sign in to your account you will be redirected to http://localhost:3000/google/redirect route
-## Getting To Know Yeoman
-
- * Yeoman has a heart of gold.
- * Yeoman is a person with feelings and opinions, but is very easy to work with.
- * Yeoman can be too opinionated at times but is easily convinced not to be.
- * Feel free to [learn more about Yeoman](http://yeoman.io/).
-
-[travis-image]: https://travis-ci.org/caiobsouza/generator-ts-node-api.svg?branch=master
-[travis-url]: https://travis-ci.org/caiobsouza/generator-ts-node-api
+- update the .env file with your googel keys
+- go to http://localhost:3000/auth/google route, google'll ask you to authorize into your account. After successfully sign in to your account you will be redirected to http://localhost:3000/auth/google/redirect route
