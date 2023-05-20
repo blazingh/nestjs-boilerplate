@@ -24,6 +24,7 @@ services:
 
   redis:
     image: redis:6
+    container_name: redis
     restart: always
     ports:
       - 6379:6379
@@ -32,6 +33,7 @@ services:
 
   mongo-express:
     image: mongo-express:latest
+    container_name: mongo-express
     environment:
       - ME_CONFIG_MONGODB_URL="mongodb://mongodb:27017/app"
       - ME_CONFIG_MONGODB_SERVER=mongodb
@@ -43,13 +45,18 @@ services:
       - mongodb
     ports:
       - 8888:8081
+    profile:
+      - donotstart
 
   redisinsight:
     image: redislabs/redisinsight:latest
+    container_name: redisinsight
     ports:
       - 8001:8001
     volumes:
       - redisinsight-volume:/db
+    profile:
+      - donotstart
 
 volumes:
   mongodb-volume:
